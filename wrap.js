@@ -1,13 +1,17 @@
 const wrap = (line, maxLen) => {
-    let returnString = '';
-    if (maxLen >= line.length) {
-        return line;
-    } else {
-        for (let i=0; i < maxLen; i++) {
-            returnString+=line[i];
-        } returnString+= '\n';
-        returnString+= line.slice(maxLen)
+    let returnStr = '';
+
+    const innerRec = function(line, maxLen) {
+        if (line.length === 0) {
+            return returnStr;
+        }
+        else {
+            returnStr += line.slice(0, maxLen) + '\n'
+            newline = line.slice(maxLen)
+            return innerRec(newline, maxLen)
+        }
     }
-    return returnString;
+    innerRec(line, maxLen)
+    return returnStr.slice(0, -1)
 };
-module.exports = wrap; 
+module.exports = wrap;
